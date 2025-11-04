@@ -1,12 +1,27 @@
 workflows:
-  ios-workflow:
-    name: iOS Build
+  ios_test_build:
+    name: iOS Test Build
+    instance_type: mac_mini_m2
+    max_build_duration: 60
     environment:
-      flutter: stable
+      flutter: 3.24.0
+      xcode: latest
+      vars:
+        APP_NAME: "ecommerce_mobile_app"
     scripts:
-      - name: Build iOS
+      - name: 🔹 Clean old build
         script: |
-          flutter build ios --no-codesign
+          flutter clean
+          flutter pub get
+
+      - name: 🔹 Build iOS .ipa (development/test)
+        script: |
+          flutter build ipa --debug --no-codesign
+
     artifacts:
-      - build/ios/iphoneos/*.app
-      - build/ios/**/*.ipa
+      - build/ios/ipa/*.ipa
+
+    publishing:
+      email:
+        recipients:
+          - xjorayev378@gmail.com
