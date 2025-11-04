@@ -1,18 +1,12 @@
 workflows:
   ios-workflow:
-    name: iOS IPA Build
+    name: iOS Build
     environment:
-      groups: []
+      flutter: stable
     scripts:
-      - name: Flutter setup
+      - name: Build iOS
         script: |
-          flutter clean
-          flutter pub get
-      - name: Generate iOS files
-        script: |
-          flutter pub get
-      - name: Build IPA
-        script: |
-          flutter build ipa --no-codesign
+          flutter build ios --no-codesign
     artifacts:
-      - build/ios/ipa/*.ipa
+      - build/ios/iphoneos/*.app
+      - build/ios/**/*.ipa
