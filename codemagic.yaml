@@ -3,19 +3,16 @@ workflows:
     name: iOS IPA Build
     environment:
       groups: []
-      vars:
-        XCODE_WORKSPACE: "ios/Runner.xcworkspace"
     scripts:
       - name: Flutter setup
         script: |
           flutter clean
           flutter pub get
-      - name: Build iOS
+      - name: Generate iOS files
         script: |
-          cd ios
-          pod install
-          cd ..
-          flutter build ios --no-codesign --release
+          flutter pub get
+      - name: Build IPA
+        script: |
+          flutter build ipa --no-codesign
     artifacts:
       - build/ios/ipa/*.ipa
-      - build/ios/**/*.app
